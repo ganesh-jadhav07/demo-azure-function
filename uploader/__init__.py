@@ -8,15 +8,14 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     req_body_data = req.get_body()
     if req_body_data:
         try:
-          mgu_id = req.form['mgu_id']
-          req_file = req.files.getlist('file')
-
+          mgu_id = req_body_data.get('mgu_id')
+      
         except ValueError:
             pass
 
-    if req_file:
-        return_value = upload_to_blob(mgu_id,req_file)
-        return func.HttpResponse(return_value)
+    if mgu_id:
+#         return_value = upload_to_blob(mgu_id,req_file)
+        return func.HttpResponse(mgu_id)
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Please upload a file",
