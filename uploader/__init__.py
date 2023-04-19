@@ -6,12 +6,9 @@ import azure.functions as func
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-
-    user_email = req.params.get('user_email')
-    if user_email:
-        value = get_upload_location(user_email)
-        response = {"container_name": value}
-        return func.HttpResponse(json.dumps(response), mimetype="application/json")
+    req_body_data = req.get_body()
+    if req_body_data:
+        return func.HttpResponse(req_body_data)
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Pass a user_email in the query string or in the request body for a personalized response.",
